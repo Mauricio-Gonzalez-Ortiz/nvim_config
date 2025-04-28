@@ -6,7 +6,15 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		local tree = require("nvim-tree").setup({})
+		local tree = require("nvim-tree").setup({
+			git = {
+				enable = true,
+				ignore = false,
+			},
+			filters = {
+				git_ignored = false,
+			},
+		})
 		local harp = require("harpoon.mark")
 		local api = require("nvim-tree.api")
 

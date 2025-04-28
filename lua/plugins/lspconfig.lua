@@ -155,7 +155,44 @@ return { -- LSP Configuration & Plugins
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
-			-- clangd = {},
+			clangd = {
+				-- root_dir = function(fname)
+				-- 	return require("lspconfig.util").root_pattern(
+				-- 		"Makefile",
+				-- 		"configure.ac",
+				-- 		"configure.in",
+				-- 		"config.h.in",
+				-- 		"meson.build",
+				-- 		"meson_options.txt",
+				-- 		"build.ninja"
+				-- 	)(fname) or require("lspconfig.util").root_pattern(
+				-- 		"compile_commands.json",
+				-- 		"compile_flags.txt"
+				-- 	)(fname) or require("lspconfig.util").find_git_ancestor(fname)
+				-- end,
+				capabilities = {
+					offsetEncoding = { "utf-16" },
+				},
+				init_options = {
+					usePlaceholders = true,
+					completeUnimported = true,
+					clangdFileStatus = true,
+					fallbackFlags = {
+						"-I/usr/include/opencv4",
+						"-I/usr/local/include",
+						"-lboost_system",
+						"-lopencv_core",
+						"-lopencv_highgui",
+					},
+				},
+				cmd = {
+					"clangd",
+					"--query-driver=/usr/bin/g++", -- Ensure clangd uses the right compiler
+					"--background-index",
+					"--clang-tidy",
+					"--header-insertion=never",
+				},
+			},
 			-- gopls = {},
 			pyright = {}, -- rust_analyzer = {},
 			-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -164,7 +201,7 @@ return { -- LSP Configuration & Plugins
 			--    https://github.com/pmizio/typescript-tools.nvim
 			--
 			-- But for many setups, the LSP (`tsserver`) will work just fine
-			-- tsserver = {},
+			tsserver = {},
 			--
 
 			lua_ls = {

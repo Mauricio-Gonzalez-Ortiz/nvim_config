@@ -100,12 +100,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
-vim.cmd([[
-  augroup Template
-    autocmd!
-    autocmd BufNewFile *.py 0r ~/.config/nvim/templates/template.py
-    autocmd BufNewFile *.sh 0r ~/.config/nvim/templates/template.sh
-    autocmd BufNewFile *.tex 0r ~/.config/nvim/templates/template.tex
-  augroup END
-]])
